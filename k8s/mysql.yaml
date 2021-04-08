@@ -1,0 +1,79 @@
+#mysql 8
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment
+metadata:
+  name: barter-mysql
+  namespace: barter
+spec:
+  selector:
+    matchLabels:
+      app: mysql8
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: mysql8
+    spec:
+      containers:
+      - image: mysql:8.0
+        name: mysql
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: REPLACERooTPassword
+
+            
+        - name: MYSQL_DATABASE
+          value: my_db
+        - name: MYSQL_USER
+          value: db_user
+        - name: MYSQL_PASSWORD
+          value: REPLACEUserPassword
+
+        args: ["--default-authentication-plugin=mysql_native_password"]
+        ports:
+        - containerPort: 3306
+          name: mysql8
+        volumeMounts:
+          - name: barter-mysql-persistent-storage
+            mountPath: /var/lib/mysql
+          - name: configmap
+            mountPath: /etc/mysql/conf.d
+      volumes:
+      - name: barter-mysql-persistent-storage
+        persistentVolumeClaim:
+          claimName: barter-mysql-pv-claim
+      - name: configmap
+        configMap:
+          items:
+            - key: sql_mode.cnf
+              path: sql_mode.cnf
+          name: barter-configmap
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: barter-mysql-pv-claim
+  namespace: barter
+  labels:
+    app: mysql8
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi #5 GB
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: barter-mysql8-service
+  namespace: barter
+  labels:
+    app: mysql8
+spec:
+  ports:
+  - port: 3306
+    protocol: TCP
+  selector:
+    app: mysql8

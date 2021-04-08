@@ -1,0 +1,23 @@
+App\Request\UserRegisterRequest:
+  properties:
+    userID:
+      - NotBlank: ~
+    password:
+      - NotBlank: ~
+
+App\Request\UserProfileCreateRequest:
+  properties:
+    userName:
+      - NotBlank: ~
+
+App\Request\ServiceCreateRequest:
+  properties:
+    serviceTitle:
+      - NotBlank: ~
+    categoryID:
+      - NotBlank: ~
+
+App\Request\ServiceUpdateRequest:
+  properties:
+    id:
+      - NotBlank: ~

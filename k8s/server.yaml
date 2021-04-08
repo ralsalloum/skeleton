@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: barter-webserver
+  namespace: barter
+  labels:
+    app: apache
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: apache
+  template:
+    metadata:
+      labels:
+        app: apache
+    spec:
+      containers:
+      - name: php-apache
+        env:
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: barter-secret
+              key: userpassword
+        image: gcr.io/pc-api-6479467557629758909-343/barter
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: barter-pvc-sym-m
+          mountPath: /var/www/upload/image
+      volumes:
+      - name: barter-pvc-sym-m
+        persistentVolumeClaim:
+          claimName: barter-pvc-sym-uploud
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: barter-web-service
+  namespace: barter
+  labels:
+    run: barter-web-service
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    protocol: TCP
+  selector:
+    app: apache
+---
+apiVersion: v1                  
+kind: PersistentVolumeClaim     
+metadata:                       
+   name: barter-pvc-sym-uploud
+   namespace: barter
+spec:                           
+   accessModes:                  
+   - ReadWriteOnce              
+   resources:                   
+      requests:                 
+         storage: 1Gi   
