@@ -7,8 +7,10 @@ use App\Request\UserProfileCreateRequest;
 use App\Request\UserProfileUpdateRequest;
 use App\Request\UserRegisterRequest;
 use App\Service\UserService;
-use stdClass;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -31,9 +33,9 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/user", name="userRegister", methods={"POST"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/user", name="userRegister", methods={"POST"})
+     * 
+     * @OA\Tag(name="UserProfile")
      */
     public function userRegister(Request $request)
     {
@@ -53,35 +55,10 @@ class UserController extends BaseController
         return $this->response($response, self::CREATE);
     }
 
-    // /**
-    //  * @Route("/userprofile", name="userProfileCreate", methods={"POST"})
-    //  * @param Request $request
-    //  * @return JsonResponse
-    //  */
-    // public function userProfileCreate(Request $request)
-    // {
-    //     $data = json_decode($request->getContent(), true);
-
-    //     $request = $this->autoMapping->map(stdClass::class,UserProfileCreateRequest::class,(object)$data);
-
-    //     $request->setUserID($this->getUserId());
-
-    //     $violations = $this->validator->validate($request);
-    //     if (\count($violations) > 0) {
-    //         $violationsString = (string) $violations;
-
-    //         return new JsonResponse($violationsString, Response::HTTP_OK);
-    //     }
-
-    //     $response = $this->userService->userProfileCreate($request);
-
-    //     return $this->response($response, self::CREATE);
-    // }
-
     /**
-     * @Route("/userprofile", name="updateUserProfile", methods={"PUT"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/userprofile", name="updateUserProfile", methods={"PUT"})
+     * 
+     * @OA\Tag(name="UserProfile")
      */
     public function updateUserProfile(Request $request)
     {
@@ -99,10 +76,12 @@ class UserController extends BaseController
      * @Route("api/userprofile", name="getUserProfileByID",methods={"GET"})
      *
      * @OA\Tag(name="UserProfile")
+     * 
      * @OA\Response(
-     *     response=200,
-     *     description="Returns the profile of signed-in user"
+     *      response=200,
+     *      description="Returns the profile of signed-in user"
      * )
+     * 
      */
     public function getUserProfileByID()
     {
