@@ -59,6 +59,8 @@ class UserController extends BaseController
      * @Route("api/userprofile", name="updateUserProfile", methods={"PUT"})
      * 
      * @OA\Tag(name="UserProfile")
+
+     * @Security(name="Bearer")
      */
     public function updateUserProfile(Request $request)
     {
@@ -82,6 +84,7 @@ class UserController extends BaseController
      *      description="Returns the profile of signed-in user"
      * )
      * 
+     * @Security(name="Bearer")
      */
     public function getUserProfileByID()
     {

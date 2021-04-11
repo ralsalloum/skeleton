@@ -8,6 +8,9 @@ use App\Request\CategoryUpdateRequest;
 use App\Request\DeleteRequest;
 use App\Request\GetByIdRequest;
 use App\Service\CategoryService;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,9 +33,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("category", name="createCategory", methods={"POST"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/category", name="createCategory", methods={"POST"})
+     * 
+     * @OA\Tag(name="Category")
      */
     public function create(Request $request)
     {
@@ -55,9 +58,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("category", name="updateCategory", methods={"PUT"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/category", name="updateCategory", methods={"PUT"})
+     * 
+     * @OA\Tag(name="Category")
      */
     public function update(Request $request)
     {
@@ -80,9 +83,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("category/{id}", name="deleteCategory", methods={"DELETE"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/category/{id}", name="deleteCategory", methods={"DELETE"})
+     * 
+     * @OA\Tag(name="Category")
      */
     public function delete(Request $request)
     {
@@ -94,8 +97,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("categories", name="getAllCategories", methods={"GET"})
-     * @return JsonResponse
+     * @Route("api/categories", name="getAllCategories", methods={"GET"})
+     * 
+     * @OA\Tag(name="Category")
      */
     public function getAllCategories()
     {
@@ -105,9 +109,9 @@ class CategoryController extends BaseController
     }
 
     /**
-     * @Route("category/{id}", name="getCategoryById", methods={"GET"})
-     * @param Request $request
-     * @return JsonResponse
+     * @Route("api/category/{id}", name="getCategoryById", methods={"GET"})
+     * 
+     * @OA\Tag(name="Category")
      */
     public function getCategoryById(Request $request)
     {

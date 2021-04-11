@@ -4,6 +4,9 @@ namespace App\Controller;
 
 use App\Request\UploadImageRequest;
 use App\Service\UploadFileService;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,9 +32,9 @@ class FileUploadController extends AbstractController
     }
 
     /**
-     * @Route("/uploadfile", name="imageUpload", methods={"POST"})
-     * @param Request $request
-     * @return jsonResponse
+     * @Route("api/uploadfile", name="imageUpload", methods={"POST"})
+     * 
+     * @OA\Tag(name="File Upload")
      */
     public function imageUpload(Request $request)
     {

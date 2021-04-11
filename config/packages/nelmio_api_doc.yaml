@@ -1,8 +1,8 @@
 nelmio_api_doc:
     documentation:
         info:
-            title: My App
-            description: This is an awesome app!
+            title: Symfony Skeleton 
+            description: Symfony Framework version 5.1.11
             version: 1.0.0
         
         # 1) Define the security scheme type (HTTP bearer)
@@ -14,8 +14,8 @@ nelmio_api_doc:
                     bearerFormat: JWT
                     
         # 2) Apply the security globally to all operations
-        security:
-            - Bearer: []
+        # security:
+        #     - Bearer: []
 
     areas:
         path_patterns: # an array of regexps
